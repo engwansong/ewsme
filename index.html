@@ -66,13 +66,12 @@
 
       // Update background color smoothly
       const timeRemainingPercentage = (timeDifference / (1000 * 60 * 60 * 24 * 30)) * 100; // Assuming 30 days max
-      const redIntensity = Math.max(0, 100 - timeRemainingPercentage); // Red intensity increases as time runs out
 
       // Animate the background color change
       function animateBackgroundColor() {
+        const redIntensity = Math.max(0, 100 - timeRemainingPercentage); // Calculate redIntensity for each frame
         if (redIntensity > 0) {
           countdownElement.style.backgroundColor = `rgb(${redIntensity}, 0, 0)`;
-          redIntensity -= 0.5; // Adjust the increment for smoother transition
           requestAnimationFrame(animateBackgroundColor); // Request the next frame for animation
         } else {
           // Stop animation when redIntensity reaches 0
