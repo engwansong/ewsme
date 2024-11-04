@@ -19,6 +19,12 @@
     #countdown {
       font-size: 2rem;
       margin-bottom: 20px;
+      padding: 10px;
+      border-radius: 5px;
+      background-image: linear-gradient(to right, white, white); /* Default white */
+      transition: background-image 0.5s ease; /* Add a smooth transition */
+      color: black; /* Default black text */
+      text-align: center;
     }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
@@ -58,6 +64,18 @@
       countdownString += `${seconds}s`;
 
       countdownElement.textContent = countdownString;
+
+      // Update background color based on time remaining
+      const timeRemainingPercentage = (timeDifference / (1000 * 60 * 60 * 24 * 30)) * 100; // Assuming 30 days max
+      const redIntensity = Math.max(0, 100 - timeRemainingPercentage); // Red intensity increases as time runs out
+      countdownElement.style.backgroundImage = `linear-gradient(to right, white, rgb(${redIntensity}, 0, 0))`;
+
+      // Update text color to complement the background
+      if (redIntensity > 50) {
+        countdownElement.style.color = 'white';
+      } else {
+        countdownElement.style.color = 'black';
+      }
     }
 
     // Initialize the countdown
