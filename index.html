@@ -18,8 +18,12 @@
     }
 
     h1 {
-      color: rgb(230, 0, 0); /* Default US flag red */
       margin-bottom: 20px;
+      text-align: center;
+      background-size: 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-image: linear-gradient(to right, rgb(230, 0, 0), rgb(255, 255, 255), rgb(0, 0, 255)); /* US Flag colors */
     }
 
     #countdown {
@@ -120,9 +124,6 @@
         countdownElement.style.color = 'black';
         flagWatermark.style.opacity = redIntensity / 100; // Flag fades out as redIntensity decreases
       }
-
-      // Update h1 color based on redIntensity
-      h1Element.style.color = `rgb(${interpolatedRed[0]}, ${interpolatedRed[1]}, ${interpolatedRed[2]})`;
     }
 
     // Initialize the countdown
