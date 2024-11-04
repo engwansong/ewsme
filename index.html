@@ -24,6 +24,22 @@
       background-color: white; /* Default white */
       color: black; /* Default black text */
       text-align: center;
+      position: relative; /* To position the flag image */
+    }
+
+    #countdown::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url("https://www.pngkey.com/png/full/11-113802_united-states-flag-png-transparent-background-united-states.png"); /* Replace with your flag image URL */
+      background-size: 10%; /* Adjust the size as needed */
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0.1; /* Set the opacity for a subtle effect */
+      pointer-events: none; /* Make the flag image non-interactive */
     }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
