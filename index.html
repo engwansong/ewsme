@@ -64,6 +64,16 @@
         font-size: 3rem;
       }
     }
+
+    /* New Gradient Styles */
+    #countdown {
+      background-image: linear-gradient(to right, #f0f0f0, #e0e0e0); /* Light gray to slightly darker gray */
+      transition: background-image 0.5s ease;
+    }
+
+    #countdown.red-intensity {
+      background-image: linear-gradient(to right, #ffdddd, #ffcccc); /* Light pink to slightly darker pink */
+    }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.36/moment-timezone-with-data.min.js"></script>
@@ -133,9 +143,11 @@
       if (redIntensity > 50) {
         countdownElement.style.color = 'white';
         flagWatermark.style.opacity = 1; // Flag fully visible when redIntensity is high
+        countdownElement.classList.add('red-intensity');
       } else {
         countdownElement.style.color = 'black';
         flagWatermark.style.opacity = redIntensity / 100; // Flag fades out as redIntensity decreases
+        countdownElement.classList.remove('red-intensity');
       }
     }
 
