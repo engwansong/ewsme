@@ -66,26 +66,6 @@
       countdownInterval = setInterval(updateCountdown, 1000); // Start new interval
     }
 
-    // Function to detect the user's timezone
-    function detectTimezone() {
-      if (Intl && Intl.DateTimeFormat) {
-        const options = { timeZone: 'America/New_York' }; // Default to EST
-        const formatter = new Intl.DateTimeFormat('en-US', options);
-        const parts = formatter.formatToParts(new Date());
-        const timezone = parts.find(part => part.type === 'timeZoneName').value;
-        return timezone;
-      } else {
-        // Fallback for older browsers that don't support Intl API
-        return 'America/New_York'; // Default to EST
-      }
-    }
-
-    let countdownInterval = null;
-    let timezoneOptionsPopulated = false; // Flag to track if options are populated
-
-    // Detect the user's timezone and populate the dropdown
-    const userTimezone = detectTimezone();
-
     // Function to populate timezone options
     function populateTimezoneOptions() {
       if (!timezoneOptionsPopulated) {
@@ -106,6 +86,9 @@
         pstOption.value = 'America/Los_Angeles';
         pstOption.text = 'Pacific Time (PST)';
 
+        // Get user's timezone using moment.tz.guess()
+        const userTimezone = moment.tz.guess();
+
         const userTimezoneOption = document.createElement('option');
         userTimezoneOption.value = userTimezone;
         userTimezoneOption.text = 'Your Timezone';
@@ -125,6 +108,9 @@
       }
     }
 
+    let countdownInterval = null;
+    let timezoneOptionsPopulated = false; // Flag to track if options are populated
+
     // Call populateTimezoneOptions after the DOM is ready
     document.addEventListener('DOMContentLoaded', populateTimezoneOptions);
 
@@ -134,5 +120,7 @@
     updateCountdown();
     countdownInterval = setInterval(updateCountdown, 1000);
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.36/moment-timezone-with-data.min.js"></script>
 </body>
 </html>
