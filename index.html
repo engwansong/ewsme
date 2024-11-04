@@ -119,6 +119,9 @@
         timezoneSelect.appendChild(userTimezoneOption);
 
         timezoneOptionsPopulated = true; // Set flag to true
+
+        // Now that the options are populated, we can access the value
+        timezoneSelect.value = userTimezone; // Set the select element's value
       }
     }
 
