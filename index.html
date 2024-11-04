@@ -50,7 +50,7 @@
       background-size: 10%; /* Adjust the size as needed */
       background-repeat: no-repeat;
       background-position: center;
-      opacity: 0; /* Default opacity */
+      opacity: 1; /* Default opacity */
       pointer-events: none; /* Make the flag image non-interactive */
       transition: opacity 0.5s ease; /* Smooth transition for opacity */
     }
@@ -119,7 +119,7 @@
       countdownElement.textContent = countdownString;
 
       // Update background color smoothly
-      const timeRemainingPercentage = (timeDifference / (1000 * 60 * 60 * 24 * 3)) * 100; // Assuming 3 days max
+      const timeRemainingPercentage = (timeDifference / (1000 * 60 * 60 * 24 * 30)) * 100; // Assuming 30 days max
 
       // Animate the background color change
       function animateBackgroundColor() {
@@ -142,11 +142,11 @@
       // Update text color and flag opacity
       if (redIntensity > 50) {
         countdownElement.style.color = 'white';
-        flagWatermark.style.opacity = 1; // Flag fully visible when redIntensity is high
+        flagWatermark.style.opacity = 0; // Flag invisible when redIntensity is high
         countdownElement.classList.add('red-intensity');
       } else {
         countdownElement.style.color = 'black';
-        flagWatermark.style.opacity = redIntensity / 100; // Flag fades out as redIntensity decreases
+        flagWatermark.style.opacity = 1; // Flag fully visible when redIntensity is low
         countdownElement.classList.remove('red-intensity');
       }
     }
