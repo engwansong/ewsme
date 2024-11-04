@@ -39,6 +39,9 @@
     // Election date in New York Timezone (EST)
     const electionDate = moment.tz('November 5, 2024 00:00:00', 'America/New_York').toDate();
 
+    // US Flag Red Color (RGB)
+    const flagRed = [230, 0, 0]; // Approximate US flag red
+
     // Function to update the countdown
     function updateCountdown() {
       const now = moment.tz(); // Get the current time in the user's timezone
@@ -71,7 +74,11 @@
       function animateBackgroundColor() {
         const redIntensity = Math.max(0, 100 - timeRemainingPercentage); // Calculate redIntensity for each frame
         if (redIntensity > 0) {
-          countdownElement.style.backgroundColor = `rgb(${redIntensity}, 0, 0)`;
+          // Interpolate between white and flag red
+          const interpolatedRed = flagRed.map((flagVal, i) => {
+            return Math.round(flagVal * (redIntensity / 100));
+          });
+          countdownElement.style.backgroundColor = `rgb(${interpolatedRed[0]}, ${interpolatedRed[1]}, ${interpolatedRed[2]})`;
           requestAnimationFrame(animateBackgroundColor); // Request the next frame for animation
         } else {
           // Stop animation when redIntensity reaches 0
