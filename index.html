@@ -26,10 +26,11 @@
       background-image: linear-gradient(to right, rgb(230, 0, 0), rgb(255, 255, 255), rgb(0, 0, 255)); /* US Flag colors */
       text-shadow: 0 0 5px white; /* Add a white text shadow */
       outline: 3px solid white; /* Add a white outline */
+      font-size: 3rem; /* Adjust font size for responsiveness */
     }
 
     #countdown {
-      font-size: 2rem;
+      font-size: 4rem; /* Adjust font size for responsiveness */
       margin-bottom: 20px;
       padding: 10px;
       border-radius: 5px;
@@ -52,6 +53,16 @@
       opacity: 0; /* Default opacity */
       pointer-events: none; /* Make the flag image non-interactive */
       transition: opacity 0.5s ease; /* Smooth transition for opacity */
+    }
+
+    @media (max-width: 768px) { /* Adjust for tablet and smaller screens */
+      h1 {
+        font-size: 2rem;
+      }
+
+      #countdown {
+        font-size: 3rem;
+      }
     }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
