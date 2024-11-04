@@ -25,6 +25,7 @@
       color: black; /* Default black text */
       text-align: center;
       position: relative; /* To position the flag image */
+      text-shadow: 0 0 5px black; /* Add a subtle text shadow */
     }
 
     #countdown::before {
@@ -38,8 +39,9 @@
       background-size: 10%; /* Adjust the size as needed */
       background-repeat: no-repeat;
       background-position: center;
-      opacity: 0.1; /* Set the opacity for a subtle effect */
+      opacity: 0; /* Default opacity */
       pointer-events: none; /* Make the flag image non-interactive */
+      transition: opacity 0.5s ease; /* Smooth transition for opacity */
     }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
@@ -51,6 +53,7 @@
 
   <script>
     const countdownElement = document.getElementById('countdown');
+    const flagWatermark = countdownElement.querySelector('::before'); // Get the flag watermark element
 
     // Election date in New York Timezone (EST)
     const electionDate = moment.tz('November 5, 2024 00:00:00', 'America/New_York').toDate();
@@ -104,11 +107,20 @@
       // Start the animation
       requestAnimationFrame(animateBackgroundColor);
 
-      // Update text color to complement the background
+      // Update text color and flag opacity
       if (redIntensity > 50) {
         countdownElement.style.color = 'white';
+        flagWatermark.style.opacity = 1; // Flag fully visible when redIntensity is high
       } else {
         countdownElement.style.color = 'black';
+        flagWatermark.style.opacity = redIntensity / 100; // Flag fades out as redIntensity decreases
+      }
+
+      // Adjust text shadow for contrast
+      if (redIntensity > 50) {
+        countdownElement.style.textShadow = '0 0 5px white'; // White text shadow on red background
+      } else {
+        countdownElement.style.textShadow = '0 0 5px black'; // Black text shadow on white background
       }
     }
 
