@@ -20,107 +20,38 @@
       font-size: 2rem;
       margin-bottom: 20px;
     }
-
-    select {
-      padding: 8px;
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
   </style>
 </head>
 <body>
   <h1>US Presidential Election Countdown</h1>
   <div id="countdown">...</div>
 
-  <select id="timezone-select">
-    </select>
-
   <script>
     const countdownElement = document.getElementById('countdown');
-    const timezoneSelect = document.getElementById('timezone-select');
 
-    // Default election date (5 November 2024 00:00)
-    const electionDate = new Date('November 5, 2024 00:00:00');
+    // Election date in New York Timezone (EST)
+    const electionDate = moment.tz('November 5, 2024 00:00:00', 'America/New_York').toDate();
 
     // Function to update the countdown
     function updateCountdown() {
-      const now = new Date();
-      const timeDifference = electionDate - now;
+      const now = moment.tz(); // Get the current time in the user's timezone
+      const timeDifference = electionDate - now.toDate();
 
-      // Adjust time difference for selected timezone
-      const adjustedTimeDifference = new Date(timeDifference);
-      adjustedTimeDifference.setHours(adjustedTimeDifference.getHours() + new Date().getTimezoneOffset() / 60);
-
-      const days = Math.floor(adjustedTimeDifference / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((adjustedTimeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((adjustedTimeDifference % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((adjustedTimeDifference % (1000 * 60)) / 1000);
+      const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
 
       countdownElement.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
     }
 
-    function updateTimezone() {
-      updateCountdown(); // Update countdown immediately after timezone change
-      clearInterval(countdownInterval); // Clear previous interval
-      countdownInterval = setInterval(updateCountdown, 1000); // Start new interval
-    }
-
-    // Function to populate timezone options
-    function populateTimezoneOptions() {
-      if (!timezoneOptionsPopulated) {
-        // Create option elements
-        const estOption = document.createElement('option');
-        estOption.value = 'America/New_York';
-        estOption.text = 'Eastern Time (EST)';
-
-        const cstOption = document.createElement('option');
-        cstOption.value = 'America/Chicago';
-        cstOption.text = 'Central Time (CST)';
-
-        const mstOption = document.createElement('option');
-        mstOption.value = 'America/Denver';
-        mstOption.text = 'Mountain Time (MST)';
-
-        const pstOption = document.createElement('option');
-        pstOption.value = 'America/Los_Angeles';
-        pstOption.text = 'Pacific Time (PST)';
-
-        // Get user's timezone using moment.tz.guess()
-        const userTimezone = moment.tz.guess();
-
-        const userTimezoneOption = document.createElement('option');
-        userTimezoneOption.value = userTimezone;
-        userTimezoneOption.text = 'Your Timezone';
-        userTimezoneOption.selected = true; // Set as selected
-
-        // Append options to the select element
-        timezoneSelect.appendChild(estOption);
-        timezoneSelect.appendChild(cstOption);
-        timezoneSelect.appendChild(mstOption);
-        timezoneSelect.appendChild(pstOption);
-        timezoneSelect.appendChild(userTimezoneOption);
-
-        timezoneOptionsPopulated = true; // Set flag to true
-
-        // Now that the options are populated, we can access the value
-        timezoneSelect.value = userTimezone; // Set the select element's value
-      }
-    }
-
-    let countdownInterval = null;
-    let timezoneOptionsPopulated = false; // Flag to track if options are populated
-
-    // Call populateTimezoneOptions after the DOM is ready
-    document.addEventListener('DOMContentLoaded', populateTimezoneOptions);
-
-    timezoneSelect.addEventListener('change', updateTimezone);
-
     // Initialize the countdown
     updateCountdown();
-    countdownInterval = setInterval(updateCountdown, 1000);
+    const countdownInterval = setInterval(updateCountdown, 1000);
+
+    // Load Moment.js and Moment Timezone
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.36/moment-timezone-with-data.min.js"></script>
   </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.36/moment-timezone-with-data.min.js"></script>
 </body>
 </html>
