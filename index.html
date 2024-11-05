@@ -1,159 +1,106 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>US Presidential Election Countdown</title>
+  <title>Breastmilk Calculator</title>
   <style>
     body {
       font-family: sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
       margin: 0;
-      padding: 0;
-      position: relative; /* To position the flag image */
+      padding: 20px;
     }
 
-    h1 {
-      margin-bottom: 20px;
-      text-align: center;
-      background-size: 100%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-image: linear-gradient(to right, rgb(230, 0, 0), rgb(255, 255, 255), rgb(0, 0, 255)); /* US Flag colors */
-      text-shadow: 0 0 5px white; /* Add a white text shadow */
-      outline: 3px solid white; /* Add a white outline */
-      font-size: 3rem; /* Adjust font size for responsiveness */
+    label {
+      display: block;
+      margin-bottom: 5px;
     }
 
-    #countdown {
-      font-size: 4rem; /* Adjust font size for responsiveness */
-      margin-bottom: 20px;
-      padding: 10px;
+    input[type="number"] {
+      width: 80px;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
       border-radius: 5px;
-      background-color: white; /* Default white */
-      color: black; /* Default black text */
-      text-align: center;
+      cursor: pointer;
     }
 
-    body::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/1280px-Flag_of_the_United_States.svg.png"); /* Valid US flag image URL */
-      background-size: 10%; /* Adjust the size as needed */
-      background-repeat: no-repeat;
-      background-position: center;
-      opacity: 1; /* Default opacity */
-      pointer-events: none; /* Make the flag image non-interactive */
-      transition: opacity 0.5s ease; /* Smooth transition for opacity */
-    }
-
-    @media (max-width: 768px) { /* Adjust for tablet and smaller screens */
-      h1 {
-        font-size: 2rem;
-      }
-
-      #countdown {
-        font-size: 3rem;
-      }
-    }
-
-    /* New Gradient Styles */
-    #countdown {
-      background-image: linear-gradient(to right, #f0f0f0, #e0e0e0); /* Light gray to slightly darker gray */
-      transition: background-image 0.5s ease;
-    }
-
-    #countdown.red-intensity {
-      background-image: linear-gradient(to right, #ffdddd, #ffcccc); /* Light pink to slightly darker pink */
+    #results {
+      margin-top: 20px;
+      border: 1px solid #ccc;
+      padding: 10px;
     }
   </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.36/moment-timezone-with-data.min.js"></script>
 </head>
 <body>
-  <h1>US Presidential Election Countdown</h1>
-  <div id="countdown">...</div>
+  <h1>Breastmilk Calculator</h1>
+
+  <form id="calculatorForm">
+    <label for="age">Enter your baby's age:</label>
+    <input type="number" id="age" name="age" required>
+
+    <label for="unit">Choose age unit:</label>
+    <select id="unit" name="unit">
+      <option value="weeks">Weeks</option>
+      <option value="months">Months</option>
+    </select>
+
+    <button type="submit">Calculate</button>
+  </form>
+
+  <div id="results">
+    <p>Estimated breastmilk per feed: <span id="feedAmount"></span> ounces</p>
+    <p>Estimated daily total: <span id="dailyTotal"></span> ounces</p>
+    <p><strong>Note:</strong> These are general estimates.  Consult your pediatrician or lactation consultant for personalized feeding guidance.</p>
+  </div>
 
   <script>
-    const countdownElement = document.getElementById('countdown');
-    const flagWatermark = document.querySelector('body::before'); // Get the flag watermark element
-    const h1Element = document.querySelector('h1'); // Get the h1 element
+    const calculatorForm = document.getElementById('calculatorForm');
+    const feedAmountSpan = document.getElementById('feedAmount');
+    const dailyTotalSpan = document.getElementById('dailyTotal');
 
-    // Election date in New York Timezone (EST)
-    const electionDate = moment.tz('November 5, 2024 00:00:00', 'America/New_York').toDate();
+    calculatorForm.addEventListener('submit', (event) => {
+      event.preventDefault();
 
-    // US Flag Red Color (RGB)
-    const flagRed = [230, 0, 0]; // Approximate US flag red
+      const age = parseInt(document.getElementById('age').value);
+      const unit = document.getElementById('unit').value;
 
-    // Function to update the countdown
-    function updateCountdown() {
-      const now = moment.tz(); // Get the current time in the user's timezone
-      const timeDifference = electionDate - now.toDate();
+      let feedAmount = 0;
+      let dailyTotal = 0;
 
-      const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
-
-      // Build the countdown string, only including non-zero values
-      let countdownString = '';
-      if (days > 0) {
-        countdownString += `${days}d `;
-      }
-      if (hours > 0) {
-        countdownString += `${hours}h `;
-      }
-      if (minutes > 0) {
-        countdownString += `${minutes}m `;
-      }
-      countdownString += `${seconds}s`;
-
-      countdownElement.textContent = countdownString;
-
-      // Update background color smoothly
-      const timeRemainingPercentage = (timeDifference / (1000 * 60 * 60 * 24 * 30)) * 100; // Assuming 30 days max
-
-      // Animate the background color change
-      function animateBackgroundColor() {
-        const redIntensity = Math.max(0, 100 - timeRemainingPercentage); // Calculate redIntensity for each frame
-        if (redIntensity > 0) {
-          // Interpolate between white and flag red
-          const interpolatedRed = flagRed.map((flagVal, i) => {
-            return Math.round(flagVal * (redIntensity / 100));
-          });
-          countdownElement.style.backgroundColor = `rgb(${interpolatedRed[0]}, ${interpolatedRed[1]}, ${interpolatedRed[2]})`;
-          requestAnimationFrame(animateBackgroundColor); // Request the next frame for animation
+      if (unit === 'weeks') {
+        // Feed amount based on weeks (adjust as needed)
+        if (age <= 2) {
+          feedAmount = 2.5; // ounces per feed
+        } else if (age <= 6) {
+          feedAmount = 3;
+        } else if (age <= 12) {
+          feedAmount = 3.5;
         } else {
-          // Stop animation when redIntensity reaches 0
+          feedAmount = 4;
         }
+        dailyTotal = feedAmount * 8; // Assuming 8 feeds per day
+      } else if (unit === 'months') {
+        // Feed amount based on months (adjust as needed)
+        if (age <= 1) {
+          feedAmount = 3; // ounces per feed
+        } else if (age <= 3) {
+          feedAmount = 3.5;
+        } else if (age <= 6) {
+          feedAmount = 4;
+        } else {
+          feedAmount = 4.5;
+        }
+        dailyTotal = feedAmount * 8; // Assuming 8 feeds per day
       }
 
-      // Start the animation
-      requestAnimationFrame(animateBackgroundColor);
-
-      // Update text color and flag opacity
-      if (redIntensity > 50) {
-        countdownElement.style.color = 'white';
-        flagWatermark.style.opacity = 0; // Flag invisible when redIntensity is high
-        countdownElement.classList.add('red-intensity');
-      } else {
-        countdownElement.style.color = 'black';
-        flagWatermark.style.opacity = 1; // Flag fully visible when redIntensity is low
-        countdownElement.classList.remove('red-intensity');
-      }
-    }
-
-    // Initialize the countdown
-    updateCountdown();
-    const countdownInterval = setInterval(updateCountdown, 1000);
+      feedAmountSpan.textContent = feedAmount.toFixed(1);
+      dailyTotalSpan.textContent = dailyTotal.toFixed(1);
+    });
   </script>
 </body>
 </html>
