@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Breastmilk Calculator</title>
+  <title>Breastmilk Calculator (Metric)</title>
   <style>
     body {
       font-family: sans-serif;
@@ -37,7 +37,7 @@
   </style>
 </head>
 <body>
-  <h1>Breastmilk Calculator</h1>
+  <h1>Breastmilk Calculator (Metric)</h1>
 
   <form id="calculatorForm">
     <label for="age">Enter your baby's age:</label>
@@ -53,8 +53,8 @@
   </form>
 
   <div id="results">
-    <p>Estimated breastmilk per feed: <span id="feedAmount"></span> ounces</p>
-    <p>Estimated daily total: <span id="dailyTotal"></span> ounces</p>
+    <p>Estimated breastmilk per feed: <span id="feedAmount"></span> ml</p>
+    <p>Estimated daily total: <span id="dailyTotal"></span> ml</p>
     <p><strong>Note:</strong> These are general estimates.  Consult your pediatrician or lactation consultant for personalized feeding guidance.</p>
   </div>
 
@@ -75,25 +75,25 @@
       if (unit === 'weeks') {
         // Feed amount based on weeks (adjust as needed)
         if (age <= 2) {
-          feedAmount = 2.5; // ounces per feed
+          feedAmount = 75; // ml per feed
         } else if (age <= 6) {
-          feedAmount = 3;
+          feedAmount = 90;
         } else if (age <= 12) {
-          feedAmount = 3.5;
+          feedAmount = 105;
         } else {
-          feedAmount = 4;
+          feedAmount = 120;
         }
         dailyTotal = feedAmount * 8; // Assuming 8 feeds per day
       } else if (unit === 'months') {
         // Feed amount based on months (adjust as needed)
         if (age <= 1) {
-          feedAmount = 3; // ounces per feed
+          feedAmount = 90; // ml per feed
         } else if (age <= 3) {
-          feedAmount = 3.5;
+          feedAmount = 105;
         } else if (age <= 6) {
-          feedAmount = 4;
+          feedAmount = 120;
         } else {
-          feedAmount = 4.5;
+          feedAmount = 135;
         }
         dailyTotal = feedAmount * 8; // Assuming 8 feeds per day
       }
