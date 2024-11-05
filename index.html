@@ -99,6 +99,18 @@
     const dailyTotalSpan = document.getElementById('dailyTotal');
     const feedsPerDaySpan = document.getElementById('feedsPerDay');
 
+    // Get URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const dobFromURL = urlParams.get('dob');
+
+    // If DOB is provided in the URL, populate the input field
+    if (dobFromURL) {
+      // Convert dd-mm-yyyy to yyyy-mm-dd
+      const [day, month, year] = dobFromURL.split('-');
+      const dobFormatted = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+      dobInput.value = dobFormatted;
+    }
+
     calculatorForm.addEventListener('submit', (event) => {
       event.preventDefault();
 
