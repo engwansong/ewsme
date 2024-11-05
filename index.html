@@ -103,17 +103,29 @@
     const urlParams = new URLSearchParams(window.location.search);
     const dobFromURL = urlParams.get('dob');
 
-    // If DOB is provided in the URL, populate the input field
+    // If DOB is provided in the URL, populate the input field and calculate
     if (dobFromURL) {
       // Convert dd-mm-yyyy to yyyy-mm-dd
       const [day, month, year] = dobFromURL.split('-');
       const dobFormatted = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
       dobInput.value = dobFormatted;
+
+      // Perform calculation immediately
+      calculateBreastmilk();
     }
 
     calculatorForm.addEventListener('submit', (event) => {
       event.preventDefault();
+      calculateBreastmilk();
 
+      // Update URL with the new DOB
+      const dobValue = dobInput.value;
+      const newURL = new URL(window.location.href);
+      newURL.searchParams.set('dob', dobValue);
+      window.history.replaceState(null, null, newURL.toString());
+    });
+
+    function calculateBreastmilk() {
       const dob = new Date(dobInput.value);
       const today = new Date();
 
@@ -137,16 +149,22 @@
       } else if (ageInWeeks <= 12) {
         feedAmount = 105;
         feedsPerDay = 7;
-      } else {
+      } else if (ageInWeeks <= 26) {
         feedAmount = 120;
         feedsPerDay = 6;
+      } else if (ageInWeeks <= 52) {
+        feedAmount = 150;
+        feedsPerDay = 5;
+      } else {
+        feedAmount = 180;
+        feedsPerDay = 4;
       }
-      dailyTotal = feedAmount * feedsPerDay; // Assuming 8 feeds per day
+      dailyTotal = feedAmount * feedsPerDay; 
 
       feedAmountSpan.textContent = feedAmount.toFixed(1);
       dailyTotalSpan.textContent = dailyTotal.toFixed(1);
       feedsPerDaySpan.textContent = feedsPerDay;
-    });
+    }
   </script>
 </body>
 </html>
