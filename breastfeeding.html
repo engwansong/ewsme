@@ -6,21 +6,21 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <style>
     :root {
-      --primary-blue: #006aff; /* ByteDance Blue */
-      --primary-cyan: #00c8ff; /* ByteDance Cyan */
-      --darker-cyan: #00a8ff; /* Darker ByteDance Cyan */
-      --main-font: 'Roboto', sans-serif;
-      --input-background: #f2f2f2; /* Light Gray for input fields */
-      --results-background: #f0f0f0; /* Light Gray for results section */
-      --info-section-background: #f8f8f8; /* Light Gray for info sections */
-      --info-section-border: #ddd; /* Border color for info sections */
+      --primary-blue: #002855; /* Dark Navy Blue */
+      --lighter-blue: #294360; /* Lighter Navy Blue */
+      --primary-burgundy: #800000; /* Burgundy */
+      --cream: #f8f8f8; /* Cream */
+      --light-cream: #f2f2f2; /* Light Cream */
+      --darker-cream: #f0f0f0; /* Darker Cream */
+      --brown: #a58864; /* Light Brown */
+      --main-font: 'Garamond', serif; /* Or a similar serif font */
     }
 
     body {
       font-family: var(--main-font);
       margin: 0;
       padding: 20px;
-      background-color: #f5f5f5;
+      background-color: var(--cream);
     }
 
     .container {
@@ -42,53 +42,62 @@
       display: block;
       margin-bottom: 5px;
       font-weight: 500;
+      color: var(--lighter-blue);
     }
 
     input[type="date"],
     button {
       padding: 10px;
-      border: 1px solid #ccc;
+      border: 1px solid var(--brown);
       border-radius: 4px;
       font-size: 16px;
       width: 100%;
       box-sizing: border-box;
       margin-bottom: 15px;
+      font-family: var(--main-font);
+    }
+
+    input[type="date"] {
+      background-color: var(--light-cream);
     }
 
     button {
-      background-color: var(--primary-cyan);
+      background-color: var(--primary-burgundy);
       color: white;
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
 
     button:hover {
-      background-color: var(--darker-cyan);
+      background-color: #600000; /* Darker Burgundy */
     }
 
     #results {
       margin-top: 20px;
       padding: 15px;
       border-radius: 4px;
-      background-color: var(--results-background);
+      background-color: var(--darker-cream);
+      border: 1px solid var(--brown);
     }
 
     #results p {
       margin-bottom: 10px;
+      color: var(--lighter-blue);
     }
 
     .material-icons {
       font-size: 18px;
       vertical-align: middle;
       margin-right: 5px;
+      color: var(--lighter-blue);
     }
 
     .info-section {
       margin-top: 20px;
       padding: 15px;
       border-radius: 4px;
-      background-color: var(--info-section-background);
-      border: 1px solid var(--info-section-border);
+      background-color: var(--cream);
+      border: 1px solid var(--brown);
     }
 
     .info-section h3 {
@@ -103,10 +112,12 @@
 
     .info-section li {
       margin-bottom: 5px;
+      color: var(--lighter-blue);
     }
 
     .info-section li strong {
       font-weight: bold;
+      color: var(--primary-blue);
     }
   </style>
 </head>
