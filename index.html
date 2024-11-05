@@ -105,10 +105,7 @@
 
     // If DOB is provided in the URL, populate the input field and calculate
     if (dobFromURL) {
-      // Convert dd-mm-yyyy to yyyy-mm-dd
-      const [day, month, year] = dobFromURL.split('-');
-      const dobFormatted = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-      dobInput.value = dobFormatted;
+      dobInput.value = dobFromURL;
 
       // Perform calculation immediately
       calculateBreastmilk();
