@@ -14,8 +14,8 @@
       margin-bottom: 5px;
     }
 
-    input[type="number"] {
-      width: 80px;
+    input[type="date"] {
+      width: 150px;
       padding: 5px;
       margin-bottom: 10px;
     }
@@ -37,17 +37,11 @@
   </style>
 </head>
 <body>
-  <h1>Breastmilk Calculator (Metric)</h1>
+  <h1>Breastmilk Calculator</h1>
 
   <form id="calculatorForm">
-    <label for="age">Enter your baby's age:</label>
-    <input type="number" id="age" name="age" required>
-
-    <label for="unit">Choose age unit:</label>
-    <select id="unit" name="unit">
-      <option value="weeks">Weeks</option>
-      <option value="months">Months</option>
-    </select>
+    <label for="dob">Enter your baby's date of birth:</label>
+    <input type="date" id="dob" name="dob" required>
 
     <button type="submit">Calculate</button>
   </form>
@@ -60,43 +54,36 @@
 
   <script>
     const calculatorForm = document.getElementById('calculatorForm');
+    const dobInput = document.getElementById('dob');
     const feedAmountSpan = document.getElementById('feedAmount');
     const dailyTotalSpan = document.getElementById('dailyTotal');
 
     calculatorForm.addEventListener('submit', (event) => {
       event.preventDefault();
 
-      const age = parseInt(document.getElementById('age').value);
-      const unit = document.getElementById('unit').value;
+      const dob = new Date(dobInput.value);
+      const today = new Date();
+
+      // Calculate age in milliseconds
+      const ageInMillis = today - dob;
+
+      // Convert age to weeks and months
+      const ageInWeeks = Math.floor(ageInMillis / (1000 * 60 * 60 * 24 * 7));
+      const ageInMonths = Math.floor(ageInMillis / (1000 * 60 * 60 * 24 * 30.44)); // Approx. 30.44 days in a month
 
       let feedAmount = 0;
       let dailyTotal = 0;
 
-      if (unit === 'weeks') {
-        // Feed amount based on weeks (adjust as needed)
-        if (age <= 2) {
-          feedAmount = 75; // ml per feed
-        } else if (age <= 6) {
-          feedAmount = 90;
-        } else if (age <= 12) {
-          feedAmount = 105;
-        } else {
-          feedAmount = 120;
-        }
-        dailyTotal = feedAmount * 8; // Assuming 8 feeds per day
-      } else if (unit === 'months') {
-        // Feed amount based on months (adjust as needed)
-        if (age <= 1) {
-          feedAmount = 90; // ml per feed
-        } else if (age <= 3) {
-          feedAmount = 105;
-        } else if (age <= 6) {
-          feedAmount = 120;
-        } else {
-          feedAmount = 135;
-        }
-        dailyTotal = feedAmount * 8; // Assuming 8 feeds per day
+      if (ageInWeeks <= 2) {
+        feedAmount = 75; // ml per feed
+      } else if (ageInWeeks <= 6) {
+        feedAmount = 90;
+      } else if (ageInWeeks <= 12) {
+        feedAmount = 105;
+      } else {
+        feedAmount = 120;
       }
+      dailyTotal = feedAmount * 8; // Assuming 8 feeds per day
 
       feedAmountSpan.textContent = feedAmount.toFixed(1);
       dailyTotalSpan.textContent = dailyTotal.toFixed(1);
